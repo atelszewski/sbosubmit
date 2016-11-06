@@ -1,0 +1,72 @@
+GENERAL:
+- implement --check-only, this requires:
+  - setting warning/error flag in wmsg()/dmsg(),
+  - is_error() can be removed or at least not used,
+  - relaxed check of .info MAINTAINER and E-MAIL fields, i.e. do not check
+    for particular values, but perform some basic checks,
+  - SBOSUBMIT_SUBMISSION_EMAIL and/or submission e-mail passed on command line
+    should not be required,
+  - return 1 on error and 2 on warning,
+- man: check what characters should be escaped, which are reserved, etc.,
+- man: make URLs and e-mail work as links,
+- extend ignored file list with TODO file name and issue a warning when
+  submitting a SlackBuild while TODO is not empty,
+- print submission archive md5 sum,
+- .sbopkg management: give preference to files modified from within sbopkg,
+  that is the ones with .sbopkg extension,
+
+gentest:
+- create test files that have correct values,
+- create test files that have incorrect values,
+
+.info:
+- PRGNAM: can only contain: +, -, ., [0-9], [A-Z], _, @, [a-z], must not be empty,
+- VERSION: the same as PRGNAM, except '-' is not allowed,
+- HOMEPAGE: match against URL pattern, must not be empty,
+- DOWNLOAD: match against URL pattern
+- MD5SUM: match against MD5 sum pattern
+- DOWNLOAD_x86_64: match against URL pattern,
+- MD5SUM_x86_64: match against MD5 sum pattern,
+- REQUIRES: after split, can contain %README% and multiple PRGNAM-s,
+- MAINTAINER: can only contain printable characters and spaces (but not at
+  the start and end),
+- EMAIL: the same as MAINTAINER,
+- count of DOWNLOAD-s must agree with count of MD5SUM-s,
+- count of DOWNLOAD_x86_64-s must agree with count of MD5SUM_x86_64-s,
+- if count of DOWNLOAD == 0, count of DOWNLOAD_x86_64 must be > 0,
+
+URL REGEX:
+- http://stackoverflow.com/questions/161738/what-is-the-best-regular-expression-to-check-if-a-string-is-a-valid-url
+- https://mathiasbynens.be/demo/url-regex
+
+main:
+- check .info.PRGNAM against CWD,
+- check .info.MAINTAINER against SBOSUBMIT_INFO_MAINTAINER,
+- check .info.EMAIL against SBOSUBMIT_INFO_EMAIL,
+- if possible, check .info.MD5SUM/MD5SUM_x86_64 against source tarball located
+  in the SlackBuild directory,
+
+.SlackBuild:
+- check for #!/bin/sh on the first line,
+- warn if Copyright not found,
+- verify the order of variables appearance, e.g. first is PRGNAM, second is
+  VERSION, etc.,
+- extract PRGNAM,
+- extract VERSION,
+- extract TAG
+
+OLD REGEX:
+# ^PRGNAM=prgnam [# comment]
+SLACKBUILD[PRGNAM]=$(grep -m1 "^PRGNAM=" "$FN" | cut -f2 -d=)
+# ^VERSION=${VERSION:-version} [# comment]
+SLACKBUILD[VERSION]=$(grep -m1 "^VERSION=" "$FN" | sed -e 's/^VERSION=${VERSION:-\(.*\)}\(.*\)/\1/')
+# ^TAG=${TAG:-tag} [# comment]
+SLACKBUILD[TAG]=$(grep -m1 "^TAG=" "$FN" | sed -e 's/^TAG=${TAG:-\(.*\)}\(.*\)/\1/')
+
+main:
+- check .SlackBuild.PRGNAM against .info.PRGNAM,
+- check .SlackBuild.VERSION against .info.VERSION,
+- check for the .SlackBuild.author against SBOSUBMIT_SLACKBUILD_AUTHOR,
+  this has to be found in the FIRST Copyright occurence,
+- check for the correct .SlackBuild.year against current year,
+  this has to be found in the FIRST Copyright occurence,

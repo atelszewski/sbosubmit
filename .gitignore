@@ -1,0 +1,4 @@
+/build/
+/sbosubmit
+/sbosubmit.qbs.*
+/test/audio/

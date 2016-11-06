@@ -1,0 +1,196 @@
+.\" man pages writing howto:
+.\" http://liw.fi/manpages/
+.\" http://www.linuxhowtos.org/System/creatingman.htm
+.\" http://www.schweikhardt.net/man_page_howto.html
+.TH SBOSUBMIT 1
+.SH NAME
+sbosubmit \- the SlackBuilds.org submission tool
+.SH SYNOPSIS
+.B sbosubmit
+.I [options]
+.SH DESCRIPTION
+.B sbosubmit
+is a tool to facilitate uploading of SlackBuilds to SlackBuilds.org. It does it by performing checks of the files to be submitted, packaging them and then uploading the resulting tarball to the SlackBuilds.org server for later approval.
+.P
+Using traditional methods, when you want to submit a SlackBuild, you have to perform at least the following steps:
+.IP \(bu
+very often you have to cleanup the SlackBuild directory from files used during development stage,
+.IP \(bu
+create the archive of the files to be submitted,
+.IP \(bu
+open web browser,
+.IP \(bu
+attach the archive,
+.IP \(bu
+fill in all the submission details,
+.IP \(bu
+press the submit button,
+.IP \(bu
+very often delete the created archive.
+.P
+.B sbosubmit
+allows you to perform all these steps (and a bit more) by typing a single command from within the SlackBuild directory. If you use the proposed
+.I tmpdir
+directory for additional development files (e.g. extracted source tarball), then you don't have to cleanup anything before the submission:
+.I tmpdir
+is skipped when
+.B sbosubmit
+creates the submission archive. Read on to learn more.
+.P
+Before using the tool, familiarize yourself with the submission guidelines available from https://slackbuilds.org/guidelines/. Keep in mind that this tool has been created to facilitate the submission and not to make the life of SlackBuilds.org maintainers harder than it already is. ALWAYS DOUBLE CHECK your submission before proceeding. Although the author of the tool paid a lot of attention to code different checks of the files being submitted, it is you who is responsible for making sure the files are the correct ones.
+.P
+For proper operation,
+.B sbosubmit
+expects certain directory structure to work with, namely the one that is used by
+.B sbopkg
+and SlackBuilds.org itself. This means that you have to keep the SlackBuilds organized in the
+.I CATEGORY/PRGNAM
+fashion. Only the
+.I CATEGORY/PRGNAM
+component of the path is important, other than that, your SlackBuilds can reside in whichever location you want.
+.P
+Example for submitting
+.I libreoffice
+would be:
+.RS
+$ cd /path/to/slackbuilds/office/libreoffice
+.RE
+.RS
+$ sbosubmit
+.RE
+.P
+Before uploading,
+.B sbosubmit
+performs basic checks on the following files:
+.IP \(bu
+PRGNAM.SlackBuild
+.IP \(bu
+slack\-desc
+.IP \(bu
+PRGNAM.info
+.IP \(bu
+README
+.P
+If present in the directory, the following files/directories won't be packaged and uploaded:
+.IP \(bu
+non\-regular file except directory
+.IP \(bu
+empty directory
+.IP \(bu
+soft link
+.IP \(bu
+.I tmpdir
+directory (or regular file)
+.IP \(bu
+keywords.txt
+.IP \(bu
+comment.txt
+.P
+.I soft link
+can be used to point to the program source tarball, so that the tarball itself does not have to reside in the same directory as the SlackBuild.
+.P
+.I tmpdir
+can be used freely during SlackBuild development, for example to extract the program source tarball for which the SlackBuild is being written. On my system, the backup software is configured so that it excludes
+.I tmpdir
+under my SlackBuilds repository path.
+.P
+.I keywords.txt
+can be used to keep the keywords for SlackBuild submission. This file is only processed if the
+.B \-\-keywords
+option is passed to sbosubmit. Refer to
+.B \-\-keywords
+option description for more information.
+.P
+.I comment.txt
+can be used to keep the comment for the SlackBuild submission. This file is only processed if the
+.B \-\-comment
+option is passed to sbosubmit. Refer to
+.B \-\-comment
+option description for more information.
+.SH OPTIONS
+.TP
+.BR \-\-address = \fIADDRESS\fR
+Allows to specify alternative submission address, e.g. for testing purposes. Default address is set to https://slackbuilds.org/
+.\" .TP
+.\" .BR \-\-check-only\fR
+.\" Check the submission files for correctness rather than perform the full submission procedure. As the name implies, this is useful for testing the submission files and can be used in batch mode with a small helper script. The returned values are: 1 for errors, 2 for warnings.
+.TP
+.BR \-\-comment \fI[=COMMENT]\fR
+Allows to specify the comment for SlackBuild submission. If the
+.I COMMENT
+string is omitted, the comment is taken from the
+.I comment.txt
+file residing in the SlackBuild directory. You should only add the comment if there's something important about the submission that the SlackBuilds.org maintainers should be aware of, for example if you are taking over the maintenance of the SlackBuild from someone who abandoned it.
+.TP
+.BR \-\-email = \fIEMAIL\fR
+Allows to specify your e-mail address for submission. This is required in the absence of the environment variable
+.B SBOSUBMIT_SUBMISSION_EMAIL.
+.TP
+.BR \-\-help\fR
+Display usage information and exit.
+.TP
+.BR \-\-keywords\fI[=KEYWORDS]\fR
+Allows to specify the keywords for submission. If the
+.I KEYWORDS
+string is omitted, the keywords are taken from the
+.I keywords.txt
+file residing in the SlackBuild directory. Keywords are comma\-separated words that help searchers find your submission: 1) if you are submitting a version update, don't pass the
+.B \-\-keywords
+option, 2) if you wish to add a new keyword to the list, type only the new keyword (this applies both to the
+.I keywords.txt
+file and the command line supplied keyword).
+.TP
+.BR \-\-verbose\fR
+Be verbose (quiet by default).
+.TP
+.BR \-\-version\fR
+Display version information and exit.
+.SH "FILE FORMATS"
+.TP
+.B COMMENT
+Comment file is simply a text file. The text contained within the comment file is sent
+.I as is.
+.TP
+.B KEYWORDS
+Keywords file is a text file, where the keywords are separated by comma. The keywords can span multiple lines, but
+remember that new line does not separate the individual keywords, only comma does.
+.SH ENVIRONMENT
+.TP
+.B SBOSUBMIT_SUBMISSION_EMAIL
+Your e-mail address as expected by SlackBuilds.org submission process.
+.TP
+.B SBOSUBMIT_INFO_MAINTAINER
+The name that you put into
+.I MAINTAINER
+field of the
+.I .info
+file of the submission. This value is only used to check if what you put into
+.I .info
+file is correct; if this value is empty, the check is not performed.
+.TP
+.B SBOSUBMIT_INFO_EMAIL
+The e\-mail address that you put into
+.I EMAIL
+field of the
+.I .info
+file of the submission (some people prefer to put obfuscated e-mail there, so it's different from
+.B SBOSUBMIT_SUBMISSION_EMAIL,
+which has to be your real working address). This value is only used to check if what you put into
+.I .info
+file is correct; if this value is empty, the check is not performed.
+.SH BUGS
+.IP \(bu
+If the submission is interrupted during the transfer to the server, the temporary file
+.I /tmp/sbosubmit.XXX
+is not being removed.
+.\" .IP \(bu
+.\" .B SBOSUBMIT_SUBMISSION_EMAIL
+.\" or
+.\" .B --email=EMAIL
+.\" is required even in
+.\" .B --check-only mode.
+.SH AUTHOR
+Andrzej Telszewski <atelszewski@gmail.com>
+.SH "SEE ALSO"
+.BR sbopkg (8),
+.BR slackpkg (8)
