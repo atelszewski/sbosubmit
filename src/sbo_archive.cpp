@@ -372,12 +372,19 @@ void sbo_archive_t::emsg_archive(struct archive *parchive) const
 {
   char const *cmsg;
   string msg = "unknown error.";
+  string msg2;
 
   if (parchive)
   {
     cmsg = archive_error_string(parchive);
     if (cmsg) msg = cmsg;
+    if (archive_errno(parchive) == ENOMEM)
+    {
+      msg2 = "make sure to exclude source code "
+             "tarball from the SlackBuild directory";
+    }
   }
 
   emsg() << msg << endl;
+  if (msg2.length() > 0U) emsg() << msg2 << endl;
 }
