@@ -1,4 +1,5 @@
 GENERAL:
+- add possibility of invoking external editor for comment and keywords,
 - implement --check-only, this requires:
   - setting warning/error flag in wmsg()/dmsg(),
   - is_error() can be removed or at least not used,
