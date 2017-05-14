@@ -99,6 +99,9 @@ sbo_optarg_t::sbo_optarg_t(int argc, char * const argv[]) :
     case VERSION:
       cout << sbosubmit_version << endl;
       exit(EXIT_SUCCESS);
+
+    case UNKNOWN:
+      exit(EXIT_FAILURE);
     }
   }
 

@@ -27,7 +27,8 @@ private:
     HELP,
     KEYWORDS,
     VERBOSE,
-    VERSION
+    VERSION,
+    UNKNOWN = '?'
   } opt_idx_t;
 
   static string const usage;
