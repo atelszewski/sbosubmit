@@ -1,5 +1,5 @@
 /build/
 /sbosubmit
 /sbosubmit-alias.env
-/sbosubmit.qbs.*
+*.qbs.user.*
 /test/audio/
