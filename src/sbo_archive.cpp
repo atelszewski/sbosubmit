@@ -91,7 +91,7 @@ int sbo_archive_t::create(sbo_filelist_t const &pflst, size_t const pmaxsize)
 
   if (res == ARCHIVE_OK) res = archive_write_add_filter_gzip(ar);
   if (res == ARCHIVE_OK) res = archive_write_set_format_pax_restricted(ar);
-  if (res == ARCHIVE_OK) res = archive_write_set_format_ustar(ar);
+  if (res == ARCHIVE_OK) res = archive_write_set_format_gnutar(ar);
   if (res == ARCHIVE_OK) res =
     archive_write_open_memory(ar, data, pmaxsize, &size);
   if (res != ARCHIVE_OK)
