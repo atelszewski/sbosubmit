@@ -1,5 +1,6 @@
 /build/
 /sbosubmit
 /sbosubmit-alias.env
-*.qbs.user.*
+/*.qbs.user*
 /test/audio/
+/Makefile
