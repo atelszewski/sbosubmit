@@ -1,4 +1,6 @@
 - if the submission is interrupted during the transfer to the server,
   the temporary file /tmp/sbosubmit.XXX is not removed,
 - SBOSUBMIT_SUBMISSION_EMAIL or --email=EMAIL is required even
-  in --check-only mode. (Actually, --check-only is not yet implemented).
+  in --check-only mode. (Actually, --check-only is not yet implemented),
+- sbosubmit as of now is still under release candidate umbrella.
+  --address=sbo is required to actually submit to SlackBuilds.org .
