@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <limits.h>
 #include <errno.h>
+#include <regex>
 #include "sbo_util.h"
 #include "sbo_classlog.h"
 #include "sbo_filelist.h"
@@ -275,10 +276,22 @@ int sbo_filelist_t::nftw_cb(const char * const pfpath,
 bool sbo_filelist_t::check_filename(string const &pfn) const
 /******************************************************************************/
 {
+  /* Temporary directory within SlackBuild directory. */
+
+  regex const re_tmpdir("^tmpdir(/.*)*$",
+    regex_constants::nosubs | regex_constants::egrep);
+
+  /* Qt Creator _Generic project_ file names regex. */
+
+  regex const re_qtcgenproj("^.+\\.(cflags|config|creator|"
+    "creator(\\..+){0,1}|cxxflags|files|includes|tasks)$",
+    regex_constants::nosubs | regex_constants::egrep);
+
   if (pfn == "comment.txt"  ||
       pfn == "keywords.txt" ||
-      pfn == "tmpdir"       ||
-      pfn.compare(0U, 7U, "tmpdir/") == 0)
+      regex_match(pfn, re_tmpdir) ||
+      pfn == "get-source.sh" ||
+      regex_match(pfn, re_qtcgenproj))
   {
     return false;
   }
