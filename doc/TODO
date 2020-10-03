@@ -16,6 +16,10 @@ GENERAL:
 - .sbopkg management: give preference to files modified from within sbopkg,
   that is the ones with .sbopkg extension,
 
+man:
+- accommodate for 0dc6882 (Qt Creator generic project),
+- accommodate for 4b4221c (tmp/ directory).
+
 gentest:
 - create test files that have correct values,
 - create test files that have incorrect values,
