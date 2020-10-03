@@ -278,7 +278,7 @@ bool sbo_filelist_t::check_filename(string const &pfn) const
 {
   /* Temporary directory within SlackBuild directory. */
 
-  regex const re_tmpdir("^tmpdir(/.*)*$",
+  regex const re_tmpdir("^tmp(dir){0,1}(/.*)*$",
     regex_constants::nosubs | regex_constants::egrep);
 
   /* Qt Creator _Generic project_ file names regex. */
