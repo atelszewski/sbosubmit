@@ -291,6 +291,7 @@ bool sbo_filelist_t::check_filename(string const &pfn) const
       pfn == "keywords.txt" ||
       regex_match(pfn, re_tmpdir) ||
       pfn == "get-source.sh" ||
+      pfn == "put-source.sh" ||
       regex_match(pfn, re_qtcgenproj))
   {
     return false;
