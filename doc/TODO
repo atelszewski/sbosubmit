@@ -1,4 +1,7 @@
 GENERAL:
+- switch documentation to Markdown, including sbosubmit.1 and README.rst,
+  https://github.com/cpuguy83/go-md2man can be used to convert md into man,
+- switch from qmake to make,
 - add possibility of invoking external editor for comment and keywords,
 - implement --check-only, this requires:
   - setting warning/error flag in wmsg()/dmsg(),
