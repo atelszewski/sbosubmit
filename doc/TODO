@@ -1,4 +1,6 @@
 GENERAL:
+- switch to CMake,
+- add support for submitting _updates_ through git/PR,
 - switch documentation to Markdown, including sbosubmit.1 and README.rst,
   https://github.com/cpuguy83/go-md2man can be used to convert md into man,
 - switch from qmake to make,
