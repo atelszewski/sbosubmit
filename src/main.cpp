@@ -210,10 +210,6 @@ int main(int argc, char * const argv[])
 
   if (opt.address.length() == 0U)
   {
-    xfer.set_url("http://telszewski.net/testing/sbosubmit/process_submit/");
-  }
-  else if (opt.address == "sbo")
-  {
     xfer.set_url("https://slackbuilds.org/process_submit/");
   }
   else
@@ -221,14 +217,7 @@ int main(int argc, char * const argv[])
     xfer.set_url(opt.address);
   }
 
-  if (xfer.get_url() == "https://slackbuilds.org/process_submit/")
-  {
-    imsg(1) << "submission url: https://slackbuilds.org/" << endl;
-  }
-  else
-  {
-    imsg() << "submission url: " << xfer.get_url() << endl;
-  }
+  imsg() << "submission url: " << xfer.get_url() << endl;
 
   cout << endl;
   cout << "          SUBMISSION SUMMARY:" << endl;

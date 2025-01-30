@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 
 project(sbosubmit CXX)
 
-set(SBOSUBMIT_VERSION 0.1rc1)
+set(SBOSUBMIT_VERSION 0.1)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -41,12 +41,12 @@ set(CMAKE_INSTALL_DOCDIR doc/sbosubmit-${SBOSUBMIT_VERSION} CACHE STRING "DOCDIR
 install(TARGETS sbosubmit RUNTIME)
 install(FILES man/sbosubmit.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1)
 install(FILES
+    NEWS.md
+    README.md
     doc/BUGS
-    doc/ChangeLog
     doc/CONDITIONS
     doc/INSTALL
     doc/LICENSE
-    doc/README
     doc/TODO
     TYPE DOC
 )
