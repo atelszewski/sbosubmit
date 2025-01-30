@@ -1,10 +1,10 @@
 #ifndef SBO_VERSION_H_INCLUDED
 #define SBO_VERSION_H_INCLUDED
 
-#include <string>
+#include <string_view>
 
 using namespace std;
 
-extern string const sbosubmit_version;
+inline constexpr string_view sbosubmit_version{"@SBOSUBMIT_VERSION@"};
 
 #endif

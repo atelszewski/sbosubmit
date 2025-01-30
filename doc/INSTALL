@@ -1,14 +1,8 @@
 Installation instructions:
 ==========================
 
-1. Generate Makefile:
-$ CFLAGS="-O2" CXXFLAGS="-O2" qmake sbosubmit.pro \
-  PREFIX=/usr \
-  MANDIR=/usr/man \
-  DOCDIR=/usr/doc/sbosubmit-VERSION
-
-2. Build:
-$ make
-
-3. Install:
-$ make install INSTALL_ROOT=/path/to/install/root
+```
+$ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+$ cmake --build build
+$ cmake --install build --prefix=<INSTALL_PREFIX>
+```

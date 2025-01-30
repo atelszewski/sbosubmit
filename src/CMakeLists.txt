@@ -1,0 +1,48 @@
+target_sources(sbosubmit
+    PRIVATE
+    main.cpp
+    sbo_archive.cpp
+    sbo_archive.h
+    sbo_category.cpp
+    sbo_category.h
+    sbo_classlog.cpp
+    sbo_classlog.h
+    sbo_comment.cpp
+    sbo_comment.h
+    sbo_env.cpp
+    sbo_env.h
+    sbo_filelist.cpp
+    sbo_filelist.h
+    sbo_html_filter.cpp
+    sbo_html_filter.h
+    sbo_info.cpp
+    sbo_info.h
+    sbo_keywords.cpp
+    sbo_keywords.h
+    sbo_optarg.cpp
+    sbo_optarg.h
+    sbo_readme.cpp
+    sbo_readme.h
+    sbo_slackbuild.cpp
+    sbo_slackbuild.h
+    sbo_slack_desc.cpp
+    sbo_slack_desc.h
+    sbo_subfile_base.cpp
+    sbo_subfile_base.h
+    sbo_util.cpp
+    sbo_util.h
+    sbo_version.h.in
+    sbo_xfer.cpp
+    sbo_xfer.h
+)
+
+configure_file(
+  sbo_version.h.in
+  sbo_version.h
+)
+
+target_include_directories(
+    sbosubmit
+    PRIVATE
+    ${CMAKE_CURRENT_BINARY_DIR}
+)
