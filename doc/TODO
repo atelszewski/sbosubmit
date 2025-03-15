@@ -14,6 +14,10 @@ GENERAL:
 - man: make URLs and e-mail work as links,
 - extend ignored file list with TODO file name and issue a warning when
   submitting a SlackBuild while TODO is not empty,
+- extend ignored file list with PRGNAM.hint (slackrepo),
+- add ability to configure (e.g. via config file) ignored files
+  and remove ignoring QtCreator/get-source.sh/put-source.sh,
+- add ability to ignore files from .gitignore,
 - print submission archive md5 sum,
 - .sbopkg management: give preference to files modified from within sbopkg,
   that is the ones with .sbopkg extension,
